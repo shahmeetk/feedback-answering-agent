@@ -1,142 +1,194 @@
-# Universal Feedback Answering Agent
+# Feedback Answering Agent
 
-Draft evidence-based feedback for people, products, services,
-experiences, and surveys.
+**An AI helper that drafts honest answers to feedback forms and surveys — for products, people, services, experiences, or any survey link.**
 
-Works through shared instructions with Cursor, Claude, Claude Code,
-Antigravity, and other AI assistants that accept Markdown context.
+You talk to the agent in plain English.  
+It drafts answers. **You** review them and submit the form yourself.
 
-## Features
+No coding required for normal use.
 
-- Five sentiment presets
-- Free-text and choice/rating question support
-- Optional survey links and public reference sources
-- Firsthand-evidence safeguards
-- Human review before submission
-- Dependency-free prompt-building CLI
+---
 
-## Sentiments
+## Start in 30 seconds
 
-| Value | Style |
+1. Open this folder in **Cursor**, **Claude Code**, **Antigravity**, or upload the prompt file to **Claude** / **ChatGPT**.
+2. Paste this:
+
+```text
+You are my Feedback Answering Agent.
+Read START_HERE.md, AGENTS.md, and prompts/feedback-agent.md.
+Help me draft feedback. Do not submit anything.
+
+Subject: [name of the product / person / service]
+Type: [person / product / service / experience / survey]
+Sentiment: [positive / negative / moderate / extremely_happy / extremely_sad]
+What happened:
+- [your fact 1]
+- [your fact 2]
+Questions:
+1. [paste question]
+2. [paste question]
+```
+
+3. Read the draft → edit if needed → paste into the real form.
+
+**New here?** Begin with [START_HERE.md](START_HERE.md)  
+**Step-by-step for each tool:** [docs/HOW_TO_USE.md](docs/HOW_TO_USE.md)  
+**Real-life examples:** [docs/USE_CASES.md](docs/USE_CASES.md)  
+**Fill-in form:** [templates/my-feedback-request.md](templates/my-feedback-request.md)
+
+---
+
+## What this agent is
+
+| It is | It is not |
 |---|---|
-| positive | Appreciative and constructive |
-| negative | Critical, specific, and respectful |
-| moderate | Balanced and measured |
-| extremely_happy | Enthusiastic and grateful |
-| extremely_sad | Disappointed or saddened, without hostility |
+| A drafting assistant for feedback & surveys | A bot that auto-submits forms |
+| Works with Cursor, Claude, ChatGPT, Claude Code, Antigravity | Locked to one company’s AI |
+| Based on **your** real experience | Allowed to invent stories |
+| Five clear “how I feel” modes | One LinkedIn-only or person-only tool |
 
-Sentiment never overrides facts.
+---
 
-## Quick start
+## How the agent works (simple flow)
 
-Requires Python 3.10+.
+```text
+┌─────────────────────┐
+│ 1. You share facts  │  what happened + how you feel + questions/link
+└──────────┬──────────┘
+           ▼
+┌─────────────────────┐
+│ 2. Agent reads rules│  AGENTS.md + prompts/feedback-agent.md
+└──────────┬──────────┘
+           ▼
+┌─────────────────────┐
+│ 3. Agent drafts     │  answers, rating suggestions, gaps flagged
+└──────────┬──────────┘
+           ▼
+┌─────────────────────┐
+│ 4. You review       │  fix tone, confirm stars/choices, remove private info
+└──────────┬──────────┘
+           ▼
+┌─────────────────────┐
+│ 5. You submit       │  you paste into the real survey — agent never submits
+└─────────────────────┘
+```
+
+---
+
+## How I feel (sentiment)
+
+| Choose this | When |
+|---|---|
+| `positive` | Mostly good experience |
+| `negative` | Something went wrong; you want it fixed |
+| `moderate` | Mixed — some good, some not |
+| `extremely_happy` | You loved it |
+| `extremely_sad` | You were very disappointed (still polite) |
+
+Sentiment changes **tone**, not **facts**. If your notes and mood disagree, the agent should ask you — not make things up.
+
+---
+
+## Use with your favorite agentic tool
+
+### Cursor
+
+1. **File → Open Folder** → this repository  
+2. Open **Agent / Chat**  
+3. Paste the starter message above (or fill [templates/my-feedback-request.md](templates/my-feedback-request.md) and ask the agent to use it)  
+4. Review the draft  
+
+Cursor can also follow [`.cursor/rules/feedback-agent.mdc`](.cursor/rules/feedback-agent.mdc) automatically in this project.
+
+### Claude Code
+
+1. Open a terminal in this folder  
+2. Start Claude Code  
+3. Paste the starter message  
+4. Review → submit the form yourself  
+
+### Claude.ai (web)
+
+1. New chat → attach `prompts/feedback-agent.md`  
+2. Optionally attach your filled `templates/my-feedback-request.md`  
+3. Ask it to draft answers only  
+
+### ChatGPT or similar chat tools
+
+Same idea: attach `prompts/feedback-agent.md`, paste your notes, ask for a **draft only**.
+
+### Antigravity / other agentic IDEs
+
+Open this repo as the project, point the agent at `AGENTS.md` + `prompts/feedback-agent.md`, use the starter message.
+
+### Optional: terminal prompt builder (technical)
 
 ```bash
-git clone https://github.com/shahmeetk/feedback-answering-agent.git
-cd feedback-answering-agent
+python feedback_agent.py --input examples/product-feedback.json
+```
 
+This prints one big prompt to paste into any AI.  
+**Skip this if you are not comfortable with terminals** — chat options above are enough.
+
+---
+
+## Everyday use cases
+
+| Use case | Sentiment idea |
+|---|---|
+| App / product survey | positive, moderate, or extremely_happy |
+| Support or clinic visit went badly | negative or extremely_sad |
+| Peer / teammate review | positive or moderate |
+| Hotel / event experience | any |
+| Company sent a survey link | any — paste link or screenshots |
+
+Full copy-paste examples: [docs/USE_CASES.md](docs/USE_CASES.md)
+
+---
+
+## What’s inside this repo
+
+```text
+feedback-answering-agent/
+├── START_HERE.md                 ← begin here if you are not technical
+├── README.md                     ← this file
+├── AGENTS.md                     ← short rules every AI agent should read
+├── CLAUDE.md                     ← Claude / Claude Code project context
+├── .cursor/rules/                ← Cursor agent rules
+├── prompts/feedback-agent.md     ← full agent brain (workflow + output format)
+├── templates/my-feedback-request.md  ← fill-in form for normal people
+├── docs/
+│   ├── HOW_TO_USE.md             ← tool-by-tool instructions
+│   └── USE_CASES.md              ← real-world examples
+├── examples/                     ← sample requests
+├── feedback_agent.py             ← optional prompt builder (no internet needed)
+└── tests/                        ← checks the helper script
+```
+
+---
+
+## Safety rules (please read)
+
+- Draft only — **never** auto-submit surveys  
+- Use **your** real experience; do not invent testimonials  
+- Do not share passwords, one-time codes, or private account data with the AI  
+- For people reviews: stick to work you observed  
+- Always review ratings and text before sending  
+
+---
+
+## For developers (optional)
+
+Requires Python 3.10+. No packages to install.
+
+```bash
 python -m unittest discover -s tests -v
 python feedback_agent.py --input examples/product-feedback.json
 ```
 
-The CLI prints a complete prompt. Paste it into your chosen assistant.
+---
 
-It does not call an LLM, browse websites, or submit surveys.
+## Contributing
 
-## Use in Cursor, Claude Code, or Antigravity
-
-Open the repository in your assistant and ask:
-
-> Read AGENTS.md and prompts/feedback-agent.md.
-> Use examples/product-feedback.json as the request.
-> Draft answers to each question. Do not submit anything.
-
-Do not rely on automatic instruction discovery: explicitly reference
-the files when starting a session.
-
-## Use in Claude or another chat assistant
-
-1. Generate the prompt using the CLI.
-2. Paste its output into the chat.
-3. Provide screenshots or question text if links are inaccessible.
-4. Review the resulting answers.
-
-Alternatively, attach prompts/feedback-agent.md and your request JSON.
-
-## Create a request
-
-Copy examples/product-feedback.json and replace its values.
-
-Required:
-- subject_type
-- subject_name
-- sentiment
-- questions or survey_url
-
-Optional:
-- context
-- observations
-- reference_urls
-- language
-- length: short, medium, detailed
-
-Questions are strings. Include full options and scale labels in the
-question text for rating or multiple-choice questions.
-
-A URL-only request requires an assistant with browsing access.
-Otherwise, supply the questions directly.
-
-## Example interactive request
-
-> Help me complete a service survey.
-> Sentiment: negative.
-> I waited 45 minutes beyond the scheduled appointment.
-> Staff explained the delay but did not provide an updated estimate.
-> Questions: What went well? What should improve?
-> Keep answers short and constructive.
-
-## Privacy and integrity
-
-- Do not commit confidential feedback or personal data.
-- Review your AI provider's data-handling settings before sharing.
-- Public profile information is background, not proof of performance.
-- Never fabricate experiences or testimonials.
-- Review all ratings and answers yourself.
-- This agent does not submit forms.
-
-## Tests
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-## Contributing through a pull request
-
-If you have write access:
-
-```bash
-git switch -c feat/universal-feedback-agent
-git add AGENTS.md CLAUDE.md README.md feedback_agent.py prompts examples tests
-git commit -m "Add portable universal feedback drafting agent"
-git push -u origin feat/universal-feedback-agent
-```
-
-Then open a pull request on GitHub.
-
-Without write access, fork the repository first and open a pull request
-from your fork.
-
-If GitHub CLI is installed and authenticated:
-
-```bash
-gh pr create \
-  --title "Add universal feedback drafting agent" \
-  --body "Adds portable instructions, sentiment presets, CLI, examples, and tests."
-```
-
-## Limitations
-
-- Browser access depends on the assistant being used.
-- Authenticated survey pages may require copied text or screenshots.
-- Model output requires human verification.
-- The included tests validate prompt construction, not model behavior.
+Improvements welcome via pull request. Keep the agent **portable** (works in many AI tools) and **safe** (draft-only, evidence-based).
