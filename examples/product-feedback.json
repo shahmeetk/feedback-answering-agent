@@ -1,0 +1,20 @@
+{
+  "subject_type": "product",
+  "subject_name": "Example task management app",
+  "sentiment": "moderate",
+  "survey_url": "",
+  "questions": [
+    "What do you like most about the product?",
+    "What could we improve?",
+    "Is there anything else you would like to share?"
+  ],
+  "context": "I use the app to track tasks for a small project team.",
+  "observations": [
+    "The board view makes it easy to see task ownership.",
+    "Mobile notifications sometimes arrive late.",
+    "I would like more control over notification settings."
+  ],
+  "reference_urls": [],
+  "language": "English",
+  "length": "medium"
+}
